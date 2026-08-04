@@ -18,5 +18,5 @@ class ColorBlock(Block):
 
 @dataclass(frozen=True)
 class ResultBlock(Block):
-    pins: tuple[str]
+    pins: list[str] = field(default_factory=list)
 
