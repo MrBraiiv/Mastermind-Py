@@ -1,14 +1,14 @@
 import sys
-
-_COLOR_KEYS = frozenset('rgbyp')
+from constants import Colors
 
 def read():
-    match sys.stdin.read(1).lower():
-        case '<' | ',':
-            return 'left'
-        case '>' | '.':
-            return 'right'
-        case c if c in _COLOR_KEYS:
-            return c
-        case _:
-            return None
+    while True:
+        match sys.stdin.read(1).lower():
+            case '<' | ',':
+                return 'left'
+            case '>' | '.':
+                return 'right'
+            case c if c in Colors:
+                return Colors(c).name.lower()
+            case _:
+                continue

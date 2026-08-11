@@ -1,22 +1,20 @@
 from dataclasses import dataclass, field
 
+from constants import MAX_TURNS, CODE_LEN
+
 class Board:
-    def __init__(self, rows):
-        self.rows = rows
+    def __init__(self, num_rows=MAX_TURNS):
+        self.rows = [Row() for i in range(num_rows)]
 
 class Row:
-    def __init__(self, blocks):
-        self.blocks = blocks
-
-class Block:
-    """Base for Block object types"""
+    def __init__(self, num_colors=CODE_LEN):
+        self.colors = [ColorBlock('reset') for i in range(num_colors)]
+        self.result = ResultBlock(['reset' for i in range(num_colors)])
 
 @dataclass
-class ColorBlock(Block):
+class ColorBlock:
     color: str
-    
 
-@dataclass(frozen=True)
-class ResultBlock(Block):
+@dataclass
+class ResultBlock:
     pins: list[str] = field(default_factory=list)
-
