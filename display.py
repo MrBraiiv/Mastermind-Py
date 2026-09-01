@@ -3,7 +3,7 @@ import terminal
 def render(board) -> None:
     print(f"{terminal.SCREEN['clear']}{terminal.SCREEN['home']}")
     for row in board.rows:
-        print(_repr_row)
+        print(_repr_row(row))
 
 def _repr_row(row):
     blocks = [_repr_colorblock(c) for c in row.colors] + [_repr_resultblock(row.result)]

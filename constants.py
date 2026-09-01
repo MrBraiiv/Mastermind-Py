@@ -10,6 +10,10 @@ class Colors(Enum):
     BLUE =    'b'
     MAGENTA = 'm'
 
+class PegColors(Enum):
+    WHITE = 'w'
+    CYAN =  'c'
+
 class GameState(IntEnum):
     CONTINUE = auto()
     LOST = auto()

@@ -8,6 +8,8 @@ def read():
                 return 'left'
             case '>' | '.':
                 return 'right'
+            case '\n' | '\r':
+                return 'submit'
             case c if c in Colors:
                 return Colors(c).name.lower()
             case _:
