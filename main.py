@@ -1,4 +1,4 @@
-import game, board, loop, terminal
+import game, loop, terminal
 
 with terminal.Cbreakmode():
-    loop.play(game.Game(), board.Board())
+    loop.play(game.Game())

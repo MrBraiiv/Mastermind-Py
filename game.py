@@ -21,6 +21,7 @@ class Game:
         if self.full_buffer():
             _record_turn(self.history, self.buffer, _calc_feedback(self._code, tuple(self.buffer)))
             self._update_status()
+            self.empty_buffer()
 
     def _update_status(self) -> None:
         if self._code == tuple(self.buffer):
@@ -43,6 +44,10 @@ class Game:
 
     def set_color(self, color) -> None:
         self.buffer[self.cursor] = color
+        self.move_right()
+
+    def empty_buffer(self) -> None:
+        self.buffer = [None] * CODE_LEN
 
 def _random_code():
     return tuple(random.choice(list(Colors)).name.lower() for i in range(CODE_LEN))
