@@ -4,6 +4,8 @@ from constants import Colors
 def read():
     while True:
         match sys.stdin.read(1).lower():
+            case 'q':
+                return 'quit'
             case '<' | ',':
                 return 'left'
             case '>' | '.':

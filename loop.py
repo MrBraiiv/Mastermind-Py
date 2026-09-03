@@ -5,6 +5,7 @@ def play(game):
     _render(game)
     while game.gamestate == GameState.CONTINUE:
         key = keys.read()
+        if key == 'quit': return
         _handle_key(key, game)
         _render(game)
     if game.gamestate == GameState.WIN:

@@ -7,6 +7,7 @@ class Cbreakmode:
     def __enter__(self):
         self._old = tty.setcbreak(self._fd)
         _hide_cursor()
+        _clear_scroll()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         termios.tcsetattr(self._fd, termios.TCSADRAIN, self._old)
@@ -17,6 +18,9 @@ def _show_cursor():
 
 def _hide_cursor():
     print(CURSOR['hide'], end='')
+
+def _clear_scroll():
+        print(SCREEN['clear_scroll'], end='')
 
 BLOCK = {
     'horizontal':         '\u2500',  # ─
