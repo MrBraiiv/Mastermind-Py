@@ -53,6 +53,7 @@ TEXT = {
     'bold':   '\033[1m',
     'red':    '\033[31m',
     'yellow': '\033[33m',
+    'black':  '\033[30m',
 }
 
 CURSOR = {

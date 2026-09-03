@@ -1,21 +1,31 @@
-import terminal
-from constants import BLOCK_WIDTH
+import terminal, os
+from constants import BLOCK_WIDTH, BOARD_SIZE, CONTROLS
 
 def render(board, current_row=None, cursor=None) -> None:
     print(f"{terminal.SCREEN['clear']}{terminal.SCREEN['home']}")
+    pad = _padding()
     for row_index, row in enumerate(board.rows):
-        print(repr_row(row))
+        for line in _repr_row(row).split('\n'):
+            print(pad + line)
         if row_index == current_row and cursor is not None:
-            print(' ' * (cursor * BLOCK_WIDTH + 1) + '^^')
+            print(pad + ' ' * (cursor * BLOCK_WIDTH + 1) + '^^')
+    print(_repr_controls(CONTROLS, terminal.TEXT['black'], terminal.COLORS['green']))
 
 def message(text, color) -> None:
     print(terminal.TEXT['bold'] + terminal.TEXT[color] + text + terminal.COLORS['reset'])
 
-def repr_row(row):
-    return _join([_repr_colorblock(c) for c in row.colors] + [_repr_resultblock(row.result)])
-
 def repr_colors(colors):
     return _join([_repr_colorblock(c) for c in colors])
+
+def _padding():
+    return ' ' * max(0, (os.get_terminal_size().columns - BOARD_SIZE) // 2)
+
+def _repr_row(row):
+    return _join([_repr_colorblock(c) for c in row.colors] + [_repr_resultblock(row.result)])
+
+def _repr_controls(content, text_color, background_color):
+    width = os.get_terminal_size().columns
+    return background_color + text_color + content.center(width)[:width] + terminal.COLORS['reset']
 
 def _join(blocks):
     return '\n'.join([''.join(block[i] for block in blocks) for i in range(4)])
