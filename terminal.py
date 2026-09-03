@@ -37,6 +37,12 @@ COLORS = {
     'white':   '\033[47m',
 }
 
+TEXT = {
+    'bold':   '\033[1m',
+    'red':    '\033[31m',
+    'yellow': '\033[33m',
+}
+
 CURSOR = {
     'up':      '\033[A',
     'down':    '\033[B',

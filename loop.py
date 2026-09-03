@@ -1,5 +1,5 @@
 import keys, display, board
-from constants import CODE_LEN, MAX_TURNS, PegColors, GameState
+from constants import CODE_LEN, MAX_TURNS, PegColors, GameState, WIN_MESSAGE, LOST_MESSAGE
 
 def play(game):
     _render(game)
@@ -7,22 +7,16 @@ def play(game):
         key = keys.read()
         _handle_key(key, game)
         _render(game)
+    if game.gamestate == GameState.WIN:
+        display.message(WIN_MESSAGE, 'yellow')
+    elif game.gamestate == GameState.LOST:
+        display.message(LOST_MESSAGE, 'red')
+        print(display.repr_colors([board.ColorBlock(c) for c in game.code]))
 
 def _render(game):
     display.render(_build_board(game),
                    current_row=len(game.history.guesses),
                    cursor=game.cursor)
-
-def _handle_key(key, game):
-    match(key):
-        case 'left':
-            game.move_left()
-        case 'right':
-            game.move_right()
-        case 'submit':
-            game.submit_guess()
-        case color:
-            game.set_color(color)
 
 def _build_board(game):
     b = board.Board()
@@ -40,3 +34,14 @@ def _fill(row, guess, exacts, misplaced):
         row.result.pins[i] = PegColors.WHITE.name.lower()
     for i in range(exacts, exacts + misplaced):
         row.result.pins[i] = PegColors.CYAN.name.lower()
+
+def _handle_key(key, game):
+    match(key):
+        case 'left':
+            game.move_left()
+        case 'right':
+            game.move_right()
+        case 'submit':
+            game.submit_guess()
+        case color:
+            game.set_color(color)

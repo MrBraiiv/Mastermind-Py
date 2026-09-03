@@ -10,7 +10,7 @@ class History:
 
 class Game:
     def __init__(self):
-        self._code = _random_code()
+        self.code = _random_code()
         self.buffer = [None] * CODE_LEN
         self.history = History()
         self.cursor = 0
@@ -19,12 +19,12 @@ class Game:
 
     def submit_guess(self) -> None:
         if self.full_buffer():
-            _record_turn(self.history, self.buffer, _calc_feedback(self._code, tuple(self.buffer)))
+            _record_turn(self.history, self.buffer, _calc_feedback(self.code, tuple(self.buffer)))
             self._update_status()
             self.empty_buffer()
 
     def _update_status(self) -> None:
-        if self._code == tuple(self.buffer):
+        if self.code == tuple(self.buffer):
             self.gamestate = GameState.WIN
         elif self.turn >= MAX_TURNS - 1:
             self.gamestate = GameState.LOST

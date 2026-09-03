@@ -4,12 +4,20 @@ from constants import BLOCK_WIDTH
 def render(board, current_row=None, cursor=None) -> None:
     print(f"{terminal.SCREEN['clear']}{terminal.SCREEN['home']}")
     for row_index, row in enumerate(board.rows):
-        print(_repr_row(row))
+        print(repr_row(row))
         if row_index == current_row and cursor is not None:
             print(' ' * (cursor * BLOCK_WIDTH + 1) + '^^')
 
-def _repr_row(row):
-    blocks = [_repr_colorblock(c) for c in row.colors] + [_repr_resultblock(row.result)]
+def message(text, color) -> None:
+    print(terminal.TEXT['bold'] + terminal.TEXT[color] + text + terminal.COLORS['reset'])
+
+def repr_row(row):
+    return _join([_repr_colorblock(c) for c in row.colors] + [_repr_resultblock(row.result)])
+
+def repr_colors(colors):
+    return _join([_repr_colorblock(c) for c in colors])
+
+def _join(blocks):
     return '\n'.join([''.join(block[i] for block in blocks) for i in range(4)])
 
 def _repr_colorblock(block):
