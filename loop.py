@@ -2,11 +2,16 @@ import keys, display, board
 from constants import CODE_LEN, MAX_TURNS, PegColors, GameState
 
 def play(game):
-    display.render(_build_board(game))
+    _render(game)
     while game.gamestate == GameState.CONTINUE:
         key = keys.read()
         _handle_key(key, game)
-        display.render(_build_board(game))
+        _render(game)
+
+def _render(game):
+    display.render(_build_board(game),
+                   current_row=len(game.history.guesses),
+                   cursor=game.cursor)
 
 def _handle_key(key, game):
     match(key):

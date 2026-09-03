@@ -1,7 +1,8 @@
 from enum import Enum, IntEnum, auto
 
 CODE_LEN = 4
-MAX_TURNS = 5
+MAX_TURNS = 10
+BLOCK_WIDTH = 4
 
 class Colors(Enum):
     RED =     'r'

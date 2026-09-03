@@ -1,9 +1,12 @@
 import terminal
+from constants import BLOCK_WIDTH
 
-def render(board) -> None:
+def render(board, current_row=None, cursor=None) -> None:
     print(f"{terminal.SCREEN['clear']}{terminal.SCREEN['home']}")
-    for row in board.rows:
+    for row_index, row in enumerate(board.rows):
         print(_repr_row(row))
+        if row_index == current_row and cursor is not None:
+            print(' ' * (cursor * BLOCK_WIDTH + 1) + '^^')
 
 def _repr_row(row):
     blocks = [_repr_colorblock(c) for c in row.colors] + [_repr_resultblock(row.result)]
@@ -23,7 +26,7 @@ def _repr_resultblock(block):
             _border('double_bottom_left', 'double_horizontal', 'double_bottom_right')]
 
 def _border(left, mid, right):
-    return terminal.BLOCK[left] + terminal.BLOCK[mid] * 2 + terminal.BLOCK[right]
+    return terminal.BLOCK[left] + terminal.BLOCK[mid] * (BLOCK_WIDTH - 2) + terminal.BLOCK[right]
 
 def _content_line(left, content, right):
     return terminal.BLOCK[left] + content + terminal.BLOCK[right]
